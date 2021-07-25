@@ -1,6 +1,6 @@
 import random
 from time import sleep
-
+import keyboard
 
 class GuessGame:
     @staticmethod
@@ -20,8 +20,14 @@ class GuessGame:
             "to a hint by pressing 'H'.")
         sleep(4)
         print("Then let's start and Good Luck!")
-        start = input("Ready to start? Type 'y' or 'n'").lower()
-        return start
+        print("Ready to start? Type 'y' or 'n'")
+        while True:
+            if keyboard.is_pressed('enter'):
+                break
+            elif keyboard.is_pressed('esc'):
+                exit()
+
+
 
     @staticmethod
     def pick_up():
@@ -37,19 +43,12 @@ def main():
     guesses = ''
     guess_of_count = 5
     out_of_guesses = True
-    user = GuessGame.intro()
+    GuessGame.intro()
     while True:
-        if user == "y":
-            number, n1, n2 = GuessGame.pick_up()
-            print("\nSuper! Let's go!")
-            print(f"The number selected is between {n1} to {n2}. Time to guess!")
-            break
-        elif user == "n":
-            exit()
-        else:
-            print("Please enter a valid input.")
-            user = input("Ready to start? Tape 'y' or 'n'").lower()
-
+        number, n1, n2 = GuessGame.pick_up()
+        print("\nSuper! Let's go!")
+        print(f"The number selected is between {n1} to {n2}. Time to guess!")
+        break
     while count <= guess_of_count:
         while True:
             if count >= 2:
