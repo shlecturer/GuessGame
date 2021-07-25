@@ -1,6 +1,8 @@
 import random
 from time import sleep
 from pynput.keyboard import Key,Controller
+
+
 class GuessGame:
     def Intro(self):
         sleep(1)
@@ -18,7 +20,7 @@ class GuessGame:
             "to a hint by pressing 'H'.")
         sleep(4)
         print("Then let's start and Good Luck!")
-        start = input("Ready to start? (Press Enter) or (Esc to exit the program)")
+        start = input("Ready to start? Tape \'y\' or \'n\'").lower()
         return start
 
     def pick_up(self):
@@ -31,39 +33,61 @@ class GuessGame:
 
 class Main(GuessGame):
     number = 0
-    count = 0
+    count = 1
     n1 = 0
     n2 = 0
     guesses = ''
-    guess_of_count = 6
+    guess_of_count = 5
     out_of_guesses = True
     user = GuessGame().Intro()
-    if user == "y":
-        lst = GuessGame().pick_up()
-        number = lst[0]
-        n1 = lst[1]
-        n2 = lst[2]
-        print("\nSuper! Let's go!")
-        print(f"The number selected is between {n1} to {n2}. Time to guess!")
-    elif user == "n":
-        exit()
-    else:
-        print("Please enter a valid input.")
+    while True:
+        if user == "y":
+            lst = GuessGame().pick_up()
+            number = lst[0]
+            n1 = lst[1]
+            n2 = lst[2]
+            print("\nSuper! Let's go!")
+            print(f"The number selected is between {n1} to {n2}. Time to guess!")
+            break
+        elif user == "n":
+            exit()
+        else:
+            print("Please enter a valid input.")
+            user = input("Ready to start? Tape \'y\' or \'n\'").lower()
+
     while count <= guess_of_count:
+        while True:
+            if count >= 2:
+                hint = input("Do you want a hint? Press \'H\' or \'Enter\' to pass: ").lower()
+                if hint == "h":
+                    if guesses < number:
+                        print("The number was too low!")
+                        break
+                    elif guesses > number:
+                        print("The number was too high")
+                        break
+                elif hint == "":
+                    break
+                else:
+                    print("Please enter a valid input.")
+            else:
+                break
+
         while True:
             try:
                 guesses = int(input("Please enter your guess: "))
-                break
+                if guesses < n1 or guesses > n2:
+                    print("Out of the range!")
+                    continue
+                else:
+                    break
             except:
                 print("Invalid guesses! Try again.")
-        if guesses < number:
-            print("The number is too low!")
-            count += 1
-        elif guesses > number:
-            print("The number is too high")
-            count += 1
+
+        if guesses != number:
+            print("Sorry. Try again!")
         else:
-            print("That the correct number well done!")
+            print("That's the correct number well done!")
             out_of_guesses = False
             break
         count += 1
