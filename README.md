@@ -1,3 +1,3 @@
 # GuessGame
 
-## The guess game is a game where the computer program chooses a celebrity and the user has to guess who it is through series of clues after each guess. 
+### The guess game is a game where the player has to guess a random number.
