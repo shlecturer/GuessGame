@@ -2,14 +2,13 @@ import random
 from time import sleep
 import keyboard
 
-
 class GuessGame:
     @staticmethod
     def intro():
         sleep(1)
         print("\nWelcome to the Guessing Game! ", end="")
         sleep(1.5)
-        contributors = "Designed by Karl and Subhman."
+        contributors = "Designed by Karl and Sander."
         for char in contributors:
             print(char, end="")
             sleep(0.21)
@@ -27,6 +26,8 @@ class GuessGame:
                 break
             elif keyboard.is_pressed('esc'):
                 exit()
+
+
 
     @staticmethod
     def pick_up():
@@ -48,34 +49,30 @@ def main():
         print("\nSuper! Let's go!")
         print(f"The number selected is between {n1} to {n2}. Time to guess!")
         break
-
     while count <= guess_of_count:
         if count >= 2:
-            print("Do you want a hint? Press 'H' or 'Enter' to pass: ")
-            hint = False
+            print("Do you want a hint? Press 'H' or 'P' to pass.")
             while True:
-                if keyboard.is_pressed('enter'):
+                if keyboard.is_pressed('h') or keyboard.is_pressed('H'):
+                    if guesses < number:
+                        print("The number was too low!")
+                        break
+                    elif guesses > number:
+                        print("The number was too high")
+                        break
+                elif keyboard.is_pressed('p') or keyboard.is_pressed('P'):
                     break
-                elif keyboard.is_pressed('h') or keyboard.is_pressed('H'):
-                    hint = True
-                    break
-
-            if hint:
-                if guesses < number:
-                    print("The number was too low!")
-                elif guesses > number:
-                    print("The number was too high")
 
         while True:
             try:
                 guesses = int(input("Please enter your guess: "))
-            except ValueError:
-                print("Invalid guesses! Try again.")
-            else:
-                if n1 <= guesses <= n2:
-                    break
+                if guesses < n1 or guesses > n2:
+                    print("Out of the range!")
+                    continue
                 else:
-                    print("Out of range!")
+                    break
+            except:
+                print("Invalid guesses! Try again.")
 
         if guesses != number:
             print("Sorry. Try again!")
@@ -83,11 +80,10 @@ def main():
             print("That's the correct number well done!")
             out_of_guesses = False
             break
-
         count += 1
 
     if out_of_guesses:
-        print(f"Sorry you run out of guesses.The number was {number}. Try again!")
+        print(f"Sorry you run out of guesses.The number was {number}.Try again!")
     else:
         print(f"Congratulations you win! The number was '{number}'.")
 
