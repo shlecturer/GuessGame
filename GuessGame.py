@@ -21,11 +21,12 @@ class GuessGame:
         sleep(4)
         print("Then let's start and Good Luck!")
         print("Press <enter> to start or <escape> to quit.")
+
         while True:
-            if keyboard.is_pressed('enter'):
-                break
-            elif keyboard.is_pressed('esc'):
-                exit()
+            if keyboard.is_pressed('enter'): #Keyboard listener check if the key 'Enter' is pressed
+                break #If pressed start to play
+            elif keyboard.is_pressed('esc'): #Keyboard listener check if the key 'Esc' is pressed
+                exit() #If pressed exit the program
 
 
 
@@ -53,25 +54,27 @@ def main():
         if count >= 2:
             print("Do you want a hint? Press 'H' or 'P' to pass.")
             while True:
-                if keyboard.is_pressed('h') or keyboard.is_pressed('H'):
+                if keyboard.is_pressed('h') or keyboard.is_pressed('H'): #Keyboard listener check if the key 'H' is pressed
+                    # if pressed the user can have a hint
                     if guesses < number:
                         print("The number was too low!")
                         break
                     elif guesses > number:
                         print("The number was too high")
                         break
-                elif keyboard.is_pressed('p') or keyboard.is_pressed('P'):
+                elif keyboard.is_pressed('p') or keyboard.is_pressed('P'):#Keyboard listener check if the key 'P' is pressed
+                    #if pressed the user pass and doesn't get a hint
                     break
 
         while True:
             try:
                 guesses = int(input("Please enter your guess: "))
-                if guesses < n1 or guesses > n2:
+                if not n1 <= guesses <= n2:
                     print("Out of the range!")
                     continue
                 else:
                     break
-            except:
+            except ValueError:
                 print("Invalid guesses! Try again.")
 
         if guesses != number:
@@ -83,7 +86,7 @@ def main():
         count += 1
 
     if out_of_guesses:
-        print(f"Sorry you run out of guesses.The number was {number}.Try again!")
+        print(f"Sorry you run out of guesses.The number was {number}. Try again!")
     else:
         print(f"Congratulations you win! The number was '{number}'.")
 
